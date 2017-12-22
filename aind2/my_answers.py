@@ -1,9 +1,30 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+...
+
+
+@author: ucaiado
+
+Created on 12/22/2017
+"""
 import numpy as np
 
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers import Dropout
 from keras.layers import LSTM
 import keras
+
+
+'''
+Begin help functions
+'''
+
+
+'''
+End help functions
+'''
 
 
 # TODO: fill out the function below that transforms the input series
@@ -12,6 +33,11 @@ def window_transform_series(series, window_size):
     # containers for input/output pairs
     X = []
     y = []
+    wsize = window_size
+
+    # slice the data
+    X = [list(series[idx: idx+wsize]) for idx in range(len(series)-wsize)]
+    y = series[wsize:]
 
     # reshape each
     X = np.asarray(X)
@@ -22,9 +48,21 @@ def window_transform_series(series, window_size):
     return X, y
 
 
-# TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(window_size):
-    pass
+    '''
+    Return a RNN to perform regression on our time series input/output data
+    source: https://keras.io/getting-started/sequential-model-guide/
+
+    :param window_size: integer. Bla
+    '''
+    model = Sequential()
+    # layer 1 uses an LSTM module with 5 hidden units
+    model.add(LSTM(5, input_shape=(window_size, 1)))
+    # layer 2 uses a fully connected module with one unit
+    # model.add(Dropout(0.5))
+    model.add(Dense(1))
+
+    return model
 
 
 # TODO: return the text input with only ascii lowercase and the punctuation
