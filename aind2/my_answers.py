@@ -10,7 +10,14 @@ Created on 12/22/2017
 """
 import numpy as np
 
-from unidecode import unidecode
+# NOTE: Here I try to install unidecode
+# to udacity-pa but it didnt work
+try:
+    from unidecode import unidecode
+except (ImportError, NameError):
+    import pip
+    pip.main(['install', 'unidecode'])
+# ##################################
 import string
 
 from keras.models import Sequential
@@ -19,7 +26,6 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 import keras
-
 
 '''
 Begin help functions
@@ -77,7 +83,7 @@ def build_part1_RNN(window_size):
 
 # TODO: return the text input with only ascii lowercase and the punctuation
 # given below included.
-def cleaned_text(text):
+def cleaned_text_old(text):
     '''
     Return the text passed without non-ASCII characters.
     Keep same punctuation. When it is possible, remove accents
@@ -94,9 +100,26 @@ def cleaned_text(text):
     return text
 
 
+# TODO: return the text input with only ascii lowercase and the punctuation
+# given below included.
+def cleaned_text(text):
+    '''
+    Return the text passed without non-ASCII characters. Keep same punctuation.
+
+    :param text: string. text to be used
+    '''
+    punctuation = [' ', '!', ',', '.', ':', ';', '?']
+    text = text.lower()
+    # text = unidecode(text)
+    # source: https://goo.gl/UB1vTa
+    set_to_keep = set(string.ascii_lowercase + ''.join(punctuation))
+    text = ''.join(filter(lambda s: s in set_to_keep, text))
+    return text
+
+
 # TODO: fill out the function below that transforms the input text and
 # window-size into a set of input/output pairs for use with our RNN model
-def window_transform_text(text, window_size, step_size):
+def window_transform_text_old(text, window_size, step_size):
     '''
     Return the input/output pairs using a slinding windows with the passed
     step size
@@ -115,11 +138,30 @@ def window_transform_text(text, window_size, step_size):
     return inputs, outputs
 
 
+def window_transform_text(text, window_size, step_size):
+    '''
+    Return the input/output pairs using a slinding windows with the passed
+    step size
+
+    :param text: string. text to be splited in input/output pairs
+    :param window_size: integer. sliding window
+    :param step_size: integer. charcter to jump at each iteration
+    '''
+    # containers for input/output pairs
+    inputs = []
+    outputs = []
+    for x in range(0, len(text)-window_size, step_size):
+        inputs.append(text[x:(x + window_size)])
+        outputs.append(text[x+window_size])
+
+    return inputs, outputs
+
+
 # TODO build the required RNN model:  a single LSTM hidden layer with softmax
 # activation, categorical_crossentropyloss
 def build_part2_RNN(window_size, num_chars):
     '''
-    Return a RNN to predict the next character after following any chunk of       
+    Return a RNN to predict the next character after following any chunk of
     characters
 
     :param window_size: integer. sliding window
