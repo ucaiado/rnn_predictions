@@ -8,14 +8,15 @@ In this project I'll build Recurrent Neural Networks (RNNs) that can generate se
 ### Install
 This project requires **Python 3** and the following Python libraries installed:
 
+- [Unidecode](https://pypi.python.org/pypi/Unidecode/)
 - [NumPy](http://www.numpy.org/)
 - [SciPy](https://www.scipy.org/)
-- [scikit-learn](http://scikit-learn.org/0.17/install.html)
-- [pandas](http://pandas.pydata.org/)
-- [matplotlib](http://matplotlib.org/)
-- [jupyter](http://ipython.org/notebook.html)
-- [tensorflow](https://www.tensorflow.org)
-- [keras](https://keras.io)
+- [Scikit-learn](http://scikit-learn.org/0.17/install.html)
+- [Pandas](http://pandas.pydata.org/)
+- [Matplotlib](http://matplotlib.org/)
+- [Jupyter](http://ipython.org/notebook.html)
+- [Tensorflow](https://www.tensorflow.org)
+- [Keras](https://keras.io)
 
 
 ### Run
