@@ -29,9 +29,5 @@ In a terminal or command window, navigate to the top-level project directory `ai
 This will open the Jupyter Notebook software and notebook in your browser.
 
 
-### Main References
-1. BLA, B. B. et al. *Bla Bla*. Bla Journal, 2017.
-
-
 ### License
 The contents of this repository are covered under the [MIT License](LICENSE).
